@@ -19,4 +19,5 @@ public interface UserService {
     void update(User user);
 
     User findByUsername(String username);
+
 }

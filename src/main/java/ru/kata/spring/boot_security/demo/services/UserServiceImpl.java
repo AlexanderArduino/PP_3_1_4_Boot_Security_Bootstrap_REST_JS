@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService {
         temp.setEmail(user.getEmail());
         temp.setUsername(user.getUsername());
         temp.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Set<Role> roleSet = new HashSet<>();
-        roleSet.add(roleDAO.findById(1L));
-        temp.setRoles(roleSet);
-        userDAO.addUser(user);
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleDAO.findById(1L));
+        temp.setRoles(roles);
+        userDAO.addUser(temp);
     }
 
     @Override
@@ -74,5 +74,6 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return userDAO.finByUsername(username);
     }
+
 
 }

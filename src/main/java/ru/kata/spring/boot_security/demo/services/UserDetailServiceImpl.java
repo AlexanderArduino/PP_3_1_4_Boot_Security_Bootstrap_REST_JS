@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService{
 
     private UserDAO userDAO;
     private RoleDAO roleDAO;

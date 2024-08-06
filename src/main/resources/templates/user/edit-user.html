@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/userupdate}" th:object="${user}">
+    <label for="id">ID</label>
+    <input type="text" readonly="readonly" th:field="*{id}" id="id"/>
+    </br>
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    </br>
+    <label for="surname">Surname</label>
+    <input type="text" th:field="*{surname}" id="surname"/>
+    </br>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email"/>
+    </br>
+    <label for="username">Username</label>
+    <input type="text" th:field="*{username}" id="username"/>
+    </br>
+    <label for="password">Password</label>
+    <input size="70" type="text" th:field="*{password}" id="password"/>
+    </br>
+
+    <!--    <label>Roles</label>-->
+    <!--    <div th:each="role : ${user.roles}">-->
+    <!--        <label th:for="${role}" th:text="${role}"></label><br>-->
+    <!--    </div>-->
+
+    <!--    <label for="roles">Roles</label>-->
+    <!--            <select aria-readonly="true" id="roles">-->
+    <!--                <option th:each="role : ${edituserroles}" th:text="${role}"></option>-->
+    <!--            </select>-->
+
+    <!--    <div th:each="role : ${edituserroles}" th:text="${role}">-->
+    <!--        <label for="${roles}">Roles</label>-->
+    <!--        <input type="text" th:field="*{role}" id="${roles}">-->
+    <!--    </div>-->
+
+    <div th:each="role : ${user.roles}">
+        <input type="checkbox" th:value="${user.roles}" th:id="${role}"/>
+        <label th:for="${role}" th:text="${role}"></label><br>
+    </div>
+    </br>
+
+    <!--    <label for="role">Role</label>-->
+    <!--    <input type="text" th:field="*{role}" id="role"/>-->
+    <!--    </br>-->
+    <input type="submit" value="Update"/>
+</form>
+</body>
+</html>
