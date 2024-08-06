@@ -9,4 +9,8 @@ import java.util.Set;
 public interface RoleDAO {
 
     Set<Role> findRoleByUserId(User user);
+
+    Role findRoleByName(String name);
+
+    Role findById(Long id);
 }

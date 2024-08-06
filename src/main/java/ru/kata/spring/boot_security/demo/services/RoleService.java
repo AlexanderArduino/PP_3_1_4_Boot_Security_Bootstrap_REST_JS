@@ -10,4 +10,6 @@ import java.util.Set;
 @Service
 public interface RoleService {
     Set<Role> findRoleByUserId(User user);
+
+    Role findRoleByName(String name);
 }
