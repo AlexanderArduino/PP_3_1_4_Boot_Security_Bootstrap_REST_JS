@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/userupdate}" th:object="${user}">
+<form th:method="post" th:action="@{/userupdate}" th:object="${user}">
     <label for="id">ID</label>
     <input type="text" readonly="readonly" th:field="*{id}" id="id"/>
     </br>
@@ -20,11 +20,20 @@
     <input type="text" th:field="*{email}" id="email"/>
     </br>
     <label for="username">Username</label>
-    <input type="text" th:field="*{username}" id="username"/>
+    <input type="text" readonly="readonly" th:field="*{username}" id="username"/>
     </br>
     <label for="password">Password</label>
-    <input size="70" type="text" th:field="*{password}" id="password"/>
+    <input size="70" type="text" readonly="readonly" th:field="*{password}" id="password"/>
     </br>
+
+    <label for="roles">Роли</label>
+    <span id="roles" th:each="userRole : *{roles}">
+    <p th:text="${userRole.getName()}">VALUE</p>
+    </span>
+<!--    <select multiple size="2" name="roleSet" required class="form-control form-control-sm">-->
+<!--        <option value="1">ROLE_ADMIN</option>-->
+<!--        <option selected="selected" value="2">ROLE_USER</option>-->
+<!--    </select>-->
 
     <!--    <label>Roles</label>-->
     <!--    <div th:each="role : ${user.roles}">-->
@@ -41,10 +50,10 @@
     <!--        <input type="text" th:field="*{role}" id="${roles}">-->
     <!--    </div>-->
 
-    <div th:each="role : ${user.roles}">
-        <input type="checkbox" th:value="${user.roles}" th:id="${role}"/>
-        <label th:for="${role}" th:text="${role}"></label><br>
-    </div>
+<!--    <div th:each="role : ${user.roles}">-->
+<!--        <input type="checkbox" th:value="${user.roles}" th:id="${role}"/>-->
+<!--        <label th:for="${role}" th:text="${role}"></label><br>-->
+<!--    </div>-->
     </br>
 
     <!--    <label for="role">Role</label>-->

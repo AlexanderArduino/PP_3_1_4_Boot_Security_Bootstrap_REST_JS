@@ -9,7 +9,11 @@ import java.util.Set;
 
 @Service
 public interface RoleService {
-    Set<Role> findRoleByUserId(User user);
+    List<Role> findAllRoles();
 
-    Role findRoleByName(String name);
+    Role getById(Long id);
+
+    List<Role> findRolesByUserId(Long id);
+
+//    void deleteAllUserRoles(List<Role> roles);
 }

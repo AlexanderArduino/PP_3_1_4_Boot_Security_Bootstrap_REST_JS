@@ -35,12 +35,12 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 
     public User() {
     }
 
-    public User(Long id, String name, String surname, String email, String username, String password, Set<Role> roles) {
+    public User(Long id, String name, String surname, String email, String username, String password, List<Role> roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -90,16 +90,16 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
     @Override
-    public Set<Role> getAuthorities() {
+    public List<Role> getAuthorities() {
         return roles;
     }
 
@@ -131,5 +131,18 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

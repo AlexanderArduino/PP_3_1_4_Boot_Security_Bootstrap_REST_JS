@@ -10,9 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleDAO;
-import ru.kata.spring.boot_security.demo.repositories.UserDAO;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -20,21 +21,22 @@ import java.util.stream.Collectors;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService{
 
-    private UserDAO userDAO;
-    private RoleDAO roleDAO;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserDetailServiceImpl(UserDAO userDAO, RoleDAO roleDAO, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDAO = userDAO;
-        this.roleDAO = roleDAO;
+    public UserDetailServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDAO.finByUsername(username);
+        User user = userRepository.findByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }

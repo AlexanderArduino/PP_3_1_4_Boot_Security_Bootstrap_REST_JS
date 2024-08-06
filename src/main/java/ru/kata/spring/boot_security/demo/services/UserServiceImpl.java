@@ -5,10 +5,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.models.Role;
-import ru.kata.spring.boot_security.demo.repositories.RoleDAO;
-import ru.kata.spring.boot_security.demo.repositories.UserDAO;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,63 +18,49 @@ import java.util.Set;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserDAO userDAO;
-    private RoleDAO roleDAO;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    @Autowired
-    public void setRoleDAO(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
-    }
-
-    @Autowired
-    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
-    public User findById(Long id) {
-        return userDAO.findById(id);
+    public void create(User user) {
+        Role role = roleRepository.getById(1L);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
     public void update(User user) {
-        userDAO.update(user);
+        userRepository.save(user);
     }
 
     @Override
-    public void save(User user) {
-        User temp = new User();
-        temp.setName(user.getName());
-        temp.setSurname(user.getSurname());
-        temp.setEmail(user.getEmail());
-        temp.setUsername(user.getUsername());
-        temp.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleDAO.findById(1L));
-        temp.setRoles(roles);
-        userDAO.addUser(temp);
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Override
-    public void delete(String username) {
-        userDAO.deleteUser(username);
+    public User getById(Long id) {
+        return userRepository.getById(id);
     }
 
     @Override
-    public List<User> findAll() {
-        return userDAO.findAll();
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userDAO.finByUsername(username);
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
-
-
 }

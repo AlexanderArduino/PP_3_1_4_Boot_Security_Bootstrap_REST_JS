@@ -21,7 +21,12 @@
     <label for="password">Пароль:</label>
     <input type="password" id="password" th:field="*{password}" required><br>
 
+
     <input type="submit" value="Отправить">
+</form>
+
+<form th:action="@{/index}" method="post">
+    <input type="submit" value="Стартовая страница">
 </form>
 </body>
 </html>

@@ -16,6 +16,8 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserDetailServiceImpl;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -49,26 +51,39 @@ public class UserController {
     @GetMapping("/user")
     public String goToUserPage(Model model, Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findByUsername(userDetails.getUsername());
+        User user = userService.getByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
-        Set<Role> roles = roleService.findRoleByUserId(user);
-        model.addAttribute("roles", roles);
+//        List<Role> roles = user.getRoles();
+//        model.addAttribute("roles", roles);
         return "/user/user";
     }
 
     @GetMapping("/edituserbyid")
     public String editUserView(@RequestParam("id") Long id, Model model) {
-        User user = userService.findById(id);
+        User user = userService.getById(id);
+        System.out.println(user);
         model.addAttribute("user", user);
         return "/user/edit-user";
     }
 
     @PostMapping("/userupdate")
-    public String updateUser(@ModelAttribute("user") User user){
-        userService.update(user);
+    public String updateUser(@ModelAttribute("user") User user, Model model){
+        User user1 = user;
+        user1.setRoles(roleService.findRolesByUserId(user.getId()));
+        model.addAttribute("user", user1);
+        userService.update(user1);
         return "redirect:/user";
     }
 
+    @GetMapping("/deleteuserbyid")
+    public String deleteUserAccount(@RequestParam("id") Long id){
+//        List<Role> roles = roleService.findRolesByUserId(id);
+//        roleService.deleteAllUserRoles(roles);
+        User user = userService.getById(id);
+        user.setRoles(new ArrayList<>());
+        userService.delete(id);
+        return "redirect:/registration";
+    }
 
 }
 
