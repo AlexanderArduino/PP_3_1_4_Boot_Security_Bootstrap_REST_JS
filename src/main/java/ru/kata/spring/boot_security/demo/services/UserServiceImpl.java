@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+
     @Override
     public void create(User user) {
         Role role = roleRepository.getById(1L);
@@ -41,6 +42,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
+        User newUser = userRepository.findByUsername(user.getUsername());
+        newUser.setName(user.getName());
+        newUser.setSurname(user.getSurname());
+        newUser.setEmail(user.getEmail());
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        List<Role> roleList = new ArrayList<>();
+        roleList.addAll(roleRepository.findAll());
+        newUser.setRoles(roleList);
         userRepository.save(user);
     }
 

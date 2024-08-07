@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+        function toggleCheckboxes(checkbox) {
+            var adminCheckbox = document.getElementById("roleAdmin");
+            var userCheckbox = document.getElementById("roleUser");
+
+            if (checkbox === adminCheckbox) {
+                userCheckbox.checked = false;
+            } else if (checkbox === userCheckbox) {
+                adminCheckbox.checked = false;
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -26,13 +38,32 @@
     <input size="70" type="text" readonly="readonly" th:field="*{password}" id="password"/>
     </br>
 
-    <label for="roles">Роли</label>
-    <span id="roles" th:each="userRole : *{roles}">
-    <p th:text="${userRole.getName()}">VALUE</p>
-    </span>
+    <label for="roles">Роль:</label>
+    <select id="roles" th:field="*{roles}">
+        <option th:each="role : ${allRoles}"
+                th:value="${role.id}"
+                th:text="${role.name}"></option>
+    </select>
+
+<!--    <div>-->
+<!--        <label for="roleUser">Role USER:</label>-->
+<!--        <input type="checkbox" id="roleUser" name="roles" value="USER"-->
+<!--               th:checked="${user.roles.contains('USER')}" onclick="toggleCheckboxes(this)" />-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--        <label for="roleAdmin">Role ADMIN:</label>-->
+<!--        <input type="checkbox" id="roleAdmin" name="roles" value="ADMIN"-->
+<!--               th:checked="${user.roles.contains('ADMIN')}" onclick="toggleCheckboxes(this)" />-->
+<!--    </div>-->
+<!--    <label for="roles">Роли</label>-->
+<!--    <span id="roles" th:each="userRole : *{roles}">-->
+<!--    <p th:text="${userRole.getName()}">VALUE</p>-->
+<!--    </span>-->
+
 <!--    <select multiple size="2" name="roleSet" required class="form-control form-control-sm">-->
-<!--        <option value="1">ROLE_ADMIN</option>-->
-<!--        <option selected="selected" value="2">ROLE_USER</option>-->
+<!--        <option value="1">ADMIN</option>-->
+<!--        <option selected="selected" value="2">USER</option>-->
 <!--    </select>-->
 
     <!--    <label>Roles</label>-->
