@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title th:text="${user.getName()} + 'page'">Username page</title>
 </head>
 <body>
 <!--<h1 th:text="Hello + ${user.getName()}"></h1>-->
@@ -15,8 +14,6 @@
         <th>Email</th>
         <th>login</th>
         <th>password</th>
-        <th>Edit</th>
-        <th>Delete</th>
         <th>Roles</th>
     </tr>
     </thead>
@@ -29,14 +26,6 @@
         <td th:text="${user.getEmail()}">Email</td>
         <td th:text="${user.getUsername()}">Username</td>
         <td th:text="${user.getPassword()}">Password</td>
-        <td>
-            <button type="button" class="demoFont" name="button_update"><a
-                    th:href="@{/edituserbyid?id={id}(id=${user.getId()})}">EDIT ACCOUNT</a></button>
-        </td>
-        <td>
-            <button type="button" class="demoFont" name="button_delete"><a
-                    th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}">DELETE ACCOUNT</a></button>
-        </td>
         <td th:text="${user.getRoles()}">Roles
 <!--            <ul>-->
 <!--                <li th:each="role : ${user.roles}" th:text="${role.getName()}"></li>-->
