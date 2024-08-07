@@ -12,8 +12,6 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserDetailServiceImpl;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.util.ArrayList;
-
 @Controller
 public class UserController {
 
@@ -42,14 +40,14 @@ public class UserController {
         this.userDetailServiceImpl = userDetailServiceImpl;
     }
 
-    @GetMapping("/user")
+    @GetMapping("user/user")
     public String goToUserPage(Model model, Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userService.getByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
 //        List<Role> roles = user.getRoles();
 //        model.addAttribute("roles", roles);
-        return "user/user";
+        return "/user/user";
     }
 }
 
