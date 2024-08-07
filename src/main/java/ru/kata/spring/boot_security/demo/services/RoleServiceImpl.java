@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,21 +27,12 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public List<Role> findAllRoles() {
-        return roleRepository.findAll();
+    public Set<Role> findAllRoles() {
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.addAll(roleRepository.findAll());
+        return roleSet;
     }
 
-    @Override
-    public Role getById(Long id) {
-        return roleRepository.getById(id);
-    }
-
-    @Override
-    public List<Role> findRolesByUserId(Long id) {
-        User user = userRepository.getById(id);
-        List<Role> roles = user.getRoles();
-        return roles;
-    }
 //
 //    @Override
 //    public void deleteAllUserRoles(List<Role> roles) {

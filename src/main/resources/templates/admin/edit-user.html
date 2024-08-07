@@ -30,12 +30,6 @@
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email"/>
     </br>
-    <label for="username">Username</label>
-    <input type="text" readonly="readonly" th:field="*{username}" id="username"/>
-    </br>
-    <label for="password">Password</label>
-    <input size="70" type="text" readonly="readonly" th:field="*{password}" id="password"/>
-    </br>
 
     <label for="roles">Роль:</label>
     <select id="roles" th:field="*{roles}">
@@ -43,53 +37,9 @@
                 th:value="${role.id}"
                 th:text="${role.name}"></option>
     </select>
-
-<!--    <div>-->
-<!--        <label for="roleUser">Role USER:</label>-->
-<!--        <input type="checkbox" id="roleUser" name="roles" value="USER"-->
-<!--               th:checked="${user.roles.contains('USER')}" onclick="toggleCheckboxes(this)" />-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--        <label for="roleAdmin">Role ADMIN:</label>-->
-<!--        <input type="checkbox" id="roleAdmin" name="roles" value="ADMIN"-->
-<!--               th:checked="${user.roles.contains('ADMIN')}" onclick="toggleCheckboxes(this)" />-->
-<!--    </div>-->
-<!--    <label for="roles">Роли</label>-->
-<!--    <span id="roles" th:each="userRole : *{roles}">-->
-<!--    <p th:text="${userRole.getName()}">VALUE</p>-->
-<!--    </span>-->
-
-<!--    <select multiple size="2" name="roleSet" required class="form-control form-control-sm">-->
-<!--        <option value="1">ADMIN</option>-->
-<!--        <option selected="selected" value="2">USER</option>-->
-<!--    </select>-->
-
-    <!--    <label>Roles</label>-->
-    <!--    <div th:each="role : ${user.roles}">-->
-    <!--        <label th:for="${role}" th:text="${role}"></label><br>-->
-    <!--    </div>-->
-
-    <!--    <label for="roles">Roles</label>-->
-    <!--            <select aria-readonly="true" id="roles">-->
-    <!--                <option th:each="role : ${edituserroles}" th:text="${role}"></option>-->
-    <!--            </select>-->
-
-    <!--    <div th:each="role : ${edituserroles}" th:text="${role}">-->
-    <!--        <label for="${roles}">Roles</label>-->
-    <!--        <input type="text" th:field="*{role}" id="${roles}">-->
-    <!--    </div>-->
-
-<!--    <div th:each="role : ${user.roles}">-->
-<!--        <input type="checkbox" th:value="${user.roles}" th:id="${role}"/>-->
-<!--        <label th:for="${role}" th:text="${role}"></label><br>-->
-<!--    </div>-->
     </br>
 
-    <!--    <label for="role">Role</label>-->
-    <!--    <input type="text" th:field="*{role}" id="role"/>-->
-    <!--    </br>-->
-    <input type="submit" value="Update"/>
+    <input type="submit" value="Обновить"/>
 </form>
 </body>
 </html>

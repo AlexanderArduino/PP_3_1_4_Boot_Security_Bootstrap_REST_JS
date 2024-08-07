@@ -40,14 +40,14 @@ public class UserController {
         this.userDetailServiceImpl = userDetailServiceImpl;
     }
 
-    @GetMapping("user/user")
+    @GetMapping("/user")
     public String goToUserPage(Model model, Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userService.getByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
 //        List<Role> roles = user.getRoles();
 //        model.addAttribute("roles", roles);
-        return "/user/user";
+        return "/user";
     }
 }
 

@@ -3,12 +3,13 @@ package ru.kata.spring.boot_security.demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,25 +33,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-        Role role = roleRepository.getById(1L);
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
-        user.setRoles(roles);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User user1 = user;
+        user1.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user1);
     }
 
     @Override
     public void update(User user) {
         User newUser = userRepository.findByUsername(user.getUsername());
-        newUser.setName(user.getName());
-        newUser.setSurname(user.getSurname());
-        newUser.setEmail(user.getEmail());
-        newUser.setUsername(user.getUsername());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        List<Role> roleList = new ArrayList<>();
-        roleList.addAll(roleRepository.findAll());
-        newUser.setRoles(roleList);
         userRepository.save(user);
     }
 
@@ -60,16 +51,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getById(Long id) {
         return userRepository.getById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }

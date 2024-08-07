@@ -36,12 +36,12 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(Long id, String name, String surname, String email, String username, String password, List<Role> roles) {
+    public User(Long id, String name, String surname, String email, String username, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -51,7 +51,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(String name, String surname, String email, String username, String password, List<Role> roles) {
+    public User(String name, String surname, String email, String username, String password, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -100,16 +100,16 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
     @Override
-    public List<Role> getAuthorities() {
+    public Set<Role> getAuthorities() {
         return roles;
     }
 

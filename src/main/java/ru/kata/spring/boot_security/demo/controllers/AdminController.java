@@ -16,7 +16,9 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AdminController {
@@ -47,7 +49,7 @@ public class AdminController {
     @GetMapping("/edituserbyid")
     public String editUserView(@RequestParam("id") Long id, Model model) {
         User user = userService.getById(id);
-        List<Role> allRoles = roleService.findAllRoles();
+        Set<Role> allRoles = roleService.findAllRoles();
         model.addAttribute("user", user);
         model.addAttribute("allRoles", allRoles);
         return "admin/edit-user";
@@ -62,7 +64,7 @@ public class AdminController {
     @GetMapping("/deleteuserbyid")
     public String deleteUserAccount(@RequestParam("id") Long id) {
         User user = userService.getById(id);
-        user.setRoles(new ArrayList<>());
+        user.setRoles(new HashSet<>());
         userService.delete(id);
         return "redirect:/admin/all-users";
     }
