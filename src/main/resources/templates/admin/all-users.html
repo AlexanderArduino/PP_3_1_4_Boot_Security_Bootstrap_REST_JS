@@ -15,8 +15,8 @@
         <th>Email</th>
         <th>login</th>
         <th>password</th>
-<!--        <th>Edit</th>-->
-<!--        <th>Delete</th>-->
+        <th>Edit</th>
+        <th>Delete</th>
         <th>Roles</th>
     </tr>
     </thead>
@@ -51,7 +51,12 @@
 <form th:action="@{/registration}" method="get">
     <input type="submit" value="New User" />
 </form>
-<form th:action="@{/logout}" method="post">
+<br>
+<form th:action="@{/}" method="get">
+    <input type="submit" value="Main page" />
+</form>
+<br>
+<form th:action="@{/logout}" method="get">
     <input type="submit" value="Logout" />
 </form>
 </body>

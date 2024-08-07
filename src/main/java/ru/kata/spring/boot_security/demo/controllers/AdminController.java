@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -26,7 +24,8 @@ public class AdminController {
 
     private UserService userService;
     private RoleService roleService;
-    private RoleRepository roleRepository;
+//    private RoleRepository roleRepository;
+//    private UserRepository userRepository;
 
     @Autowired
     public void setRoleService(RoleService roleService) {
@@ -68,9 +67,14 @@ public class AdminController {
         userService.delete(id);
         return "redirect:/admin/all-users";
     }
-
-    @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+//
+//    @Autowired
+//    public void setRoleRepository(RoleRepository roleRepository) {
+//        this.roleRepository = roleRepository;
+//    }
+//
+//    @Autowired
+//    public void setUserRepository(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 }

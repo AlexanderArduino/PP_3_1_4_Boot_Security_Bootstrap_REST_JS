@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -30,40 +29,43 @@ public class UserServiceImpl implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-
     @Override
+    @Transactional
     public void create(User user) {
-        User user1 = user;
-        user1.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user1);
-    }
-
-    @Override
-    public void update(User user) {
-        User newUser = userRepository.findByUsername(user.getUsername());
-        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
+    public void update(User user) {
+//        System.out.println("update start");
+//        User user1 = userRepository.findByUsername(user.getUsername());
+//        System.out.println(user1);
+//        user1.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public User getById(Long id) {
         return userRepository.getById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public User getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }

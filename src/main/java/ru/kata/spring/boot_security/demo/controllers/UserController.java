@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserDetailServiceImpl;
 import ru.kata.spring.boot_security.demo.services.UserService;
+
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -41,12 +44,10 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String goToUserPage(Model model, Authentication authentication){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.getByUsername(userDetails.getUsername());
+    public String goToUserPage(Model model, @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
+        String username = currentUser.getUsername();
+        User user = userService.getByUsername(username);
         model.addAttribute("user", user);
-//        List<Role> roles = user.getRoles();
-//        model.addAttribute("roles", roles);
         return "/user";
     }
 }

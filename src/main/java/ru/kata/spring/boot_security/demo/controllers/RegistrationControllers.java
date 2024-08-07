@@ -8,9 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.services.UserService;
+
+import java.util.HashSet;
 
 @Controller
 public class RegistrationControllers {
@@ -29,13 +32,15 @@ public class RegistrationControllers {
     public String registration(Model model){
         User user = new User();
         model.addAttribute("user", user);
-        return "/registration";
+        return "admin/registration";
     }
 
     @PostMapping("/registration")
     public String registrationUser(@ModelAttribute("user") User user){
+        user.setRoles(new HashSet<>());
+        user.getRoles().add(roleRepository.findRolesByName("USER"));
         userService.create(user);
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @Autowired
