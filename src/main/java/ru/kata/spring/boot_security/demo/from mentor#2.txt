@@ -2,9 +2,9 @@
 
 +++ MvcConfig рудимент
 
-проверить что названия всех методов придерживаются конвенции имен  https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html
++++ проверить что названия всех методов придерживаются конвенции имен  https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html
 
-loginPost зачем это нужно? зачем ты делаешь за Security его работу?
++++ loginPost зачем это нужно? зачем ты делаешь за Security его работу?
 
 убрать закомментированый код
 
@@ -12,7 +12,7 @@ loginPost зачем это нужно? зачем ты делаешь за Secu
 
 +++ почему над loadUserByUsername стоит @Transactional? он что то меняет в БД?
 
-Разобраться для чего нужен @Transactional, когда ставиться @Transactionalа когда @Transactional(readOnly = true) и где ставиться в сервисном слое  https://vladmihalcea.com/spring-transaction-best-practices/
++++ Разобраться для чего нужен @Transactional, когда ставиться @Transactionalа когда @Transactional(readOnly = true) и где ставиться в сервисном слое  https://vladmihalcea.com/spring-transaction-best-practices/
 
 добавить проверку на null в update методе, если пользователь не найден пробросить исключение security
 

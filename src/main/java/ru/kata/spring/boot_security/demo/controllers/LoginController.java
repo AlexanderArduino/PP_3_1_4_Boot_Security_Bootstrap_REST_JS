@@ -32,23 +32,8 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginPost(@RequestParam("username") String username,
-                            @RequestParam("password") String password,
-                            Model model) {
-        User user = userRepository.findByUsername(username);
-        if (user != null) {
-            if (bCryptPasswordEncoder.encode(password).equals(user.getPassword())) {
-                model.addAttribute("user", user);
-                return "redirect:/user";
-            }
-        }
-        return "redirect:/login";
-    }
-
     @GetMapping("/logout")
     public String logout() {
         return "redirect:/login?logout";
     }
-
 }

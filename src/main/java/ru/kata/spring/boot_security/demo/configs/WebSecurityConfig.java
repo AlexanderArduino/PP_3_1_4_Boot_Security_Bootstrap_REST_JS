@@ -17,7 +17,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final SuccessUserHandler successUserHandler;
+    private SuccessUserHandler successUserHandler;
     private UserDetailsService userDetailsService;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {

@@ -45,7 +45,7 @@ public class RegistrationControllers {
             user.setRoles(new HashSet<>());
             user.getRoles().add(roleRepository.findRolesByName("USER"));
             userService.create(user);
-            return "redirect:/login";
+            return "redirect:/admin/all-users";
         }
     }
 }

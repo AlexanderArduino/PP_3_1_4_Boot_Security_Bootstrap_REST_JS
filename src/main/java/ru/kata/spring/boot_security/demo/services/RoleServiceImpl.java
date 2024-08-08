@@ -10,16 +10,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Transactional
 public class RoleServiceImpl implements RoleService {
 
-    private final RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Set<Role> findAllRoles() {
         Set<Role> roleSet = new HashSet<>();
