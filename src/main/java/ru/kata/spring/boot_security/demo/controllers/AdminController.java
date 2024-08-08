@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
@@ -21,11 +18,8 @@ import java.util.*;
 @Controller
 public class AdminController {
 
-
     private UserService userService;
     private RoleService roleService;
-//    private RoleRepository roleRepository;
-//    private UserRepository userRepository;
 
     @Autowired
     public void setRoleService(RoleService roleService) {
@@ -67,14 +61,4 @@ public class AdminController {
         userService.delete(id);
         return "redirect:/admin/all-users";
     }
-//
-//    @Autowired
-//    public void setRoleRepository(RoleRepository roleRepository) {
-//        this.roleRepository = roleRepository;
-//    }
-//
-//    @Autowired
-//    public void setUserRepository(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 }

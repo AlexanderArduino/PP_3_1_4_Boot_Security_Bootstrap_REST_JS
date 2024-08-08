@@ -19,28 +19,10 @@ import java.security.Principal;
 public class UserController {
 
     private UserService userService;
-    private RoleService roleService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserDetailServiceImpl userDetailServiceImpl;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
-    }
-
-    @Autowired
-    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
-    @Autowired
-    public void setUserDetailServiceImpl(UserDetailServiceImpl userDetailServiceImpl) {
-        this.userDetailServiceImpl = userDetailServiceImpl;
     }
 
     @GetMapping("/user")

@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.kata.spring.boot_security.demo.services.UserService;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 
@@ -17,9 +16,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final SuccessUserHandler successUserHandler;
     private UserDetailsService userDetailsService;
-    private UserService userService;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
@@ -37,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/user/user").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers( "/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
@@ -49,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
