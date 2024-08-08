@@ -45,11 +45,6 @@ public class LoginController {
         }
         return "redirect:/login";
     }
-//        String username = currentUser.getUsername();
-//        User user = userService.getByUsername(username);
-//        model.addAttribute("user", user);
-//            return "redirect:/user";
-//    }
 
     @GetMapping("/logout")
     public String logout() {
