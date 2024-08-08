@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.AddDefaultUser;
+package ru.kata.spring.boot_security.demo.adddefaultuser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
