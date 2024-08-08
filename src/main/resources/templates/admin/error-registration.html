@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error registration</title>
+</head>
+<body>
+<div th:if="${error}" th:text="*{error}"></div>
+<br>
+<form th:action="@{/registration}" method="get">
+    <input type="submit" value="К регистрации" />
+</form>
+</body>
+</html>

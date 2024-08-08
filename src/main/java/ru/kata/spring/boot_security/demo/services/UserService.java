@@ -19,4 +19,6 @@ public interface UserService {
     User getByUsername(String username);
 
     List<User> findAllUsers();
+
+    boolean isUserExist(User user);
 }

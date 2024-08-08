@@ -69,4 +69,10 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public boolean isUserExist(User user) {
+        return userRepository.findByUsername(user.getUsername()) != null; //сли юзер есть - true
+    }
 }

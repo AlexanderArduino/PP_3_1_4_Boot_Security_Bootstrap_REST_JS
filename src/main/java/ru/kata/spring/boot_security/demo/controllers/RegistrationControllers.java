@@ -36,11 +36,16 @@ public class RegistrationControllers {
     }
 
     @PostMapping("/registration")
-    public String registrationUser(@ModelAttribute("user") User user){
+    public String registrationUser(@ModelAttribute("user") User user, Model model){
+        if(userService.isUserExist(user)){
+            model.addAttribute("error", String.format("Пользователь с логином %s уже занят", user.getUsername()));
+            return "admin/error-registration";
+        } else {
         user.setRoles(new HashSet<>());
         user.getRoles().add(roleRepository.findRolesByName("USER"));
         userService.create(user);
         return "redirect:/login";
+        }
     }
 
     @Autowired
