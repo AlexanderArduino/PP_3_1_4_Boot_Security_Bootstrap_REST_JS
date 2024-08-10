@@ -7,17 +7,8 @@
 <body>
 <h1>Добро пожаловать на главную страницу!</h1>
 
-
-<!--<form action="/registration">-->
-<!--    <button>Регистрация</button>-->
-<!--</form>-->
-<!--<br>-->
-<form action="/user">
-    <button>Вход в личный кабинет</button>
-</form>
-<br>
-<form action="/admin/all-users">
-    <button>Только с правами администратора</button>
+<form th:action="@{/login}" method="get">
+    <input type="submit" value="Login" />
 </form>
 <br>
 <form th:action="@{/logout}" method="post">

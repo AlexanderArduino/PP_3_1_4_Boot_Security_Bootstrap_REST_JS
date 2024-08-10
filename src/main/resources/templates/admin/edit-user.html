@@ -39,13 +39,15 @@
     <input type="hidden" th:field="*{password}" id="password"/>
     </br>
 
-    <label for="roles">Роль:</label>
-    <select id="roles" th:field="*{roles}">
-        <option th:each="role : ${allRoles}"
-                th:value="${role.id}"
-                th:text="${role.name}"></option>
-    </select>
-    </br>
+    <div>
+        <label>Roles:</label>
+        <ul>
+            <li th:each="role : ${allRoles}">
+                <input type="checkbox" th:field="*{roles}" th:value="${role.id}" />
+                <span th:text="${role.name}"></span>
+            </li>
+        </ul>
+    </div>
 
     <input type="submit" value="Обновить"/>
 </form>

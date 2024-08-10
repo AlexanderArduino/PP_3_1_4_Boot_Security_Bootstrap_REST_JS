@@ -3,36 +3,24 @@
 <head>
 </head>
 <body>
-<!--<h1 th:text="Hello + ${user.getName()}"></h1>-->
-<!--<h1 th:text="'Hello' + ${user.getName()}"></h1>-->
+
 <table border="1">
     <thead>
     <tr>
-<!--        <th>ID</th>-->
         <th>Name</th>
         <th>Surname</th>
         <th>Email</th>
-<!--        <th>login</th>-->
-<!--        <th>password</th>-->
         <th>Roles</th>
     </tr>
     </thead>
     <tbody>
     <!-- Использование Thymeleaf для отображения данных из модели -->
     <tr>
-<!--        <td th:text="${user.getId()}">ID</td>-->
         <td th:text="${user.getName()}">Name</td>
         <td th:text="${user.getSurname()}">Surname</td>
         <td th:text="${user.getEmail()}">Email</td>
-<!--        <td th:text="${user.getUsername()}">Username</td>-->
-<!--        <td th:text="${user.getPassword()}">Password</td>-->
         <td th:text="${user.getRoles()}">Roles
-<!--            <ul>-->
-<!--                <li th:each="role : ${user.roles}" th:text="${role.getName()}"></li>-->
-<!--            </ul>-->
-            <!--        <select>-->
-            <!--            <option th:each="role : ${user.roles}" th:text="${role.name}"></option>-->
-            <!--        </select>-->
+
         </td>
     </tr>
     </tbody>
@@ -40,8 +28,6 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Logout" />
 </form>
-<form th:action="@{/}" method="get">
-    <input type="submit" value="Main page" />
-</form>
+
 </body>
 </html>

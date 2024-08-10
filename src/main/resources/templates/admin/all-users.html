@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<!--    <title th:text="${user.getName()} + 'page'">Username page</title>-->
+
 </head>
 <body>
-<!--<h1 th:text="Hello + ${user.getName()}"></h1>-->
-<!--<h1 th:text="'Hello' + ${user.getName()}"></h1>-->
+
 <table border="1">
     <thead>
     <tr>
@@ -38,12 +37,7 @@
                     th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}">DELETE ACCOUNT</a></button>
         </td>
         <td th:text="${user.getRoles()}">Roles
-            <!--            <ul>-->
-            <!--                <li th:each="role : ${user.roles}" th:text="${role.getName()}"></li>-->
-            <!--            </ul>-->
-            <!--        <select>-->
-            <!--            <option th:each="role : ${user.roles}" th:text="${role.name}"></option>-->
-            <!--        </select>-->
+
         </td>
     </tr>
     </tbody>
