@@ -30,13 +30,11 @@
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email"/>
     </br>
-
-<!--    <label for="username" >Username</label>-->
-    <input type="hidden" th:field="*{username}" id="username"/>
+    <label for="username">Username</label>
+    <input type="text" readonly="readonly" th:field="*{username}" id="username"/>
     </br>
-
-<!--    <label for="password" type="hidden">Email</label>-->
-    <input type="hidden" th:field="*{password}" id="password"/>
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password"/>
     </br>
 
     <div>

@@ -25,15 +25,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void create(User user) {
-        User user1 = user;
-        user1.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user1);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
     @Transactional
     public void update(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
         } else {
             throw new EntityExistsException("User not found");
