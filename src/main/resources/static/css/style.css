@@ -1,0 +1,18 @@
+.table-container{
+    background-color: azure;
+    border: #9fefde;
+    --bs-accordion-border-color: var(--bs-accordion-border-color);
+}
+.table{
+    background-color: white;
+    text-align: center;
+}
+
+.background-color-azure{
+    background-color: azure;
+}
+
+.body-container{
+    height: 100%;
+    border-left: black;
+}
