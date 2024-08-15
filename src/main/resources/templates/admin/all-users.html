@@ -81,7 +81,8 @@
                                     <tr>
                                         <td>
                                             <div class="container-fluid bg-body-secondary">
-                                                <table class="table table-bordered table-striped border-1">
+                                                <table class="table table-bordered table-striped border-1"
+                                                       style="text-align: center">
                                                     <thead>
                                                     <tr style="color: black; background-color: lightgrey">
                                                         <th class="col-1">ID</th>
@@ -102,14 +103,12 @@
                                                         <td th:text="${user.getSurname()}">Email</td>
                                                         <td th:text="${user.getUsername()}">Roles</td>
                                                         <td>
-                                                            <button type="button" class="demoFont" name="button_update"><a
-                                                                    th:href="@{/edituserbyid?id={id}(id=${user.getId()})}">Edit</a>
-                                                            </button>
+                                                                <a th:href="@{/edituserbyid?id={id}(id=${user.getId()})}"
+                                                                   class="btn btn-primary">Edit</a>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="demoFont" name="button_delete"><a
-                                                                    th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}">Delete</a>
-                                                            </button>
+                                                                <a th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}"
+                                                                class="btn btn-primary">Delete</a>
                                                         </td>
                                                         <td th:text="${user.getRoles()}">Roles</td>
                                                     </tr>
