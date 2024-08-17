@@ -45,6 +45,10 @@ public class AdminController {
         model.addAttribute("username", username);
         model.addAttribute("mainUser", mainUser);
         model.addAttribute("users", users);
+        User user = new User();
+        Set<Role> allRoles = roleService.findAllRoles();
+        model.addAttribute("user", user);
+        model.addAttribute("allRoles", allRoles);
         return "/admin/all-users";
     }
 

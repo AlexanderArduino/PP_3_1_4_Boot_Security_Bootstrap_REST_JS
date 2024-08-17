@@ -57,17 +57,19 @@
                     <!-- Admin tab + all-users-info -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="user-table-tab" data-toggle="tab" data-target="#home"
+                            <button class="nav-link active" id="user-table-tab" data-toggle="tab"
+                                    data-target="#user-table"
                                     type="button" role="tab" aria-controls="user-table" aria-selected="true">User table
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="new-user-tab" data-toggle="tab" data-target="#profile"
+                            <button class="nav-link" id="new-user-tab" data-toggle="tab" data-target="#new-user"
                                     type="button" role="tab" aria-controls="new-user" aria-selected="false">New user
                             </button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
+                        <!-- Вкладка USER TABLE -->
                         <div class="tab-pane fade show active" id="user-table" role="tabpanel"
                              aria-labelledby="user-table-tab">
                             <div class="container-fluid">
@@ -103,12 +105,12 @@
                                                         <td th:text="${user.getSurname()}">Email</td>
                                                         <td th:text="${user.getUsername()}">Roles</td>
                                                         <td>
-                                                                <a th:href="@{/edituserbyid?id={id}(id=${user.getId()})}"
-                                                                   class="btn btn-primary">Edit</a>
+                                                            <a th:href="@{/edituserbyid?id={id}(id=${user.getId()})}"
+                                                               class="btn btn-primary">Edit</a>
                                                         </td>
                                                         <td>
-                                                                <a th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}"
-                                                                class="btn btn-primary">Delete</a>
+                                                            <a th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}"
+                                                               class="btn btn-primary">Delete</a>
                                                         </td>
                                                         <td th:text="${user.getRoles()}">Roles</td>
                                                     </tr>
@@ -119,6 +121,84 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <!-- Вкладка NEW USER -->
+                        <div class="tab-pane fade" id="new-user" role="tabpanel"
+                             aria-labelledby="new-user-tab">
+                            <div class="container-fluid">
+                                <div class="row mt-3">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <form th:action="@{/registration}" th:object="${user}" method="post">
+                                            <div class="form-group row"> <!-- NAME -->
+                                                <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" th:field="*{name}" class="form-control"
+                                                           id="name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row"> <!-- SURNAME -->
+                                                <label for="surname" class="col-sm-2 col-form-label">Surname</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" th:field="*{surname}" class="form-control"
+                                                           id="surname">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row"> <!-- EMAIL -->
+                                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" th:field="*{email}" class="form-control"
+                                                           id="email">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row"> <!-- USERNAME -->
+                                                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" th:field="*{username}" class="form-control"
+                                                           id="username">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row"> <!-- PASSWORD -->
+                                                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                                                <div class="col-sm-10">
+                                                    <input type="password" th:field="*{password}" class="form-control"
+                                                           id="password">
+                                                </div>
+                                            </div>
+                                            <fieldset>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-10 offset-sm-2">
+                                                        <div class="form-check">
+                                                            <ul>
+                                                                <li th:each="role : ${allRoles}">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                           id="gridCheck1" th:field="*{roles}"
+                                                                           th:value="${role.getId()}">
+                                                                    <label class="form-check-label" for="gridCheck1"
+                                                                           th:text="${role.getName()}">
+                                                                        Example checkbox
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Add new user</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
                             </div>
                         </div>
 
