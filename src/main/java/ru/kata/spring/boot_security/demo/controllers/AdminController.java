@@ -36,7 +36,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/all-users")
-    public String allUsers(Model model, @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
+    public String allUsers(Model model,
+                           @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
         List<User> users = userService.findAllUsers();
         String username = currentUser.getUsername();
         User mainUser = userService.getByUsername(username);
@@ -45,9 +46,9 @@ public class AdminController {
         model.addAttribute("username", username);
         model.addAttribute("mainUser", mainUser);
         model.addAttribute("users", users);
-        User user = new User();
+        User newUser = new User();
         Set<Role> allRoles = roleService.findAllRoles();
-        model.addAttribute("user", user);
+        model.addAttribute("newUser", newUser);
         model.addAttribute("allRoles", allRoles);
         return "/admin/all-users";
     }
@@ -55,9 +56,9 @@ public class AdminController {
 
     @GetMapping("/edituserbyid")
     public String editUserView(@RequestParam("id") Long id, Model model) {
-        User user = userService.getById(id);
+        User editUser = userService.getById(id);
         Set<Role> allRoles = roleService.findAllRoles();
-        model.addAttribute("user", user);
+        model.addAttribute("user", editUser);
         model.addAttribute("allRoles", allRoles);
         return "admin/edit-user";
     }

@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript">
-        function toggleCheckboxes(checkbox) {
-            var adminCheckbox = document.getElementById("roleAdmin");
-            var userCheckbox = document.getElementById("roleUser");
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            if (checkbox === adminCheckbox) {
-                userCheckbox.checked = false;
-            } else if (checkbox === userCheckbox) {
-                adminCheckbox.checked = false;
-            }
-        }
-    </script>
+    <title>Edit user</title>
+
+    <!--    Bootstrap 4.6.2 CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
