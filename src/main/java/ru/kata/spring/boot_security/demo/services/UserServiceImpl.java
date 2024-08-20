@@ -32,12 +32,24 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+
+//        if (userRepository.findByUsername(user.getUsername()) != null) {
+//            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//            userRepository.saveAndFlush(user);
+//        } else {
+//            throw new EntityExistsException("User not found");
+//        }
+        //todo Разобраться с корявым методом. Сделать как в секьюрке! в 1 строку с проверкой на наличие
+        User user1 = userRepository.getUserById(user.getId());
+        if(user1 != null) {
+            System.out.println("user1 not null: " + user);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            userRepository.saveAndFlush(user);
+            System.out.println(String.format("User %d was update", user.getId()));
+            userRepository.save(user);
         } else {
-            throw new EntityExistsException("User not found");
+            throw new EntityExistsException(String.format("User with id=%s not found", user.getId()));
         }
+        System.out.println("USER:" + user);
     }
 
     @Override
