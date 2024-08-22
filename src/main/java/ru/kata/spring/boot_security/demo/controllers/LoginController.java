@@ -10,15 +10,6 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 @Controller
 public class LoginController {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserRepository userRepository;
-
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     @GetMapping("/")
     public String mainPage() {
         return "/index";
@@ -27,10 +18,5 @@ public class LoginController {
     @GetMapping("/login")
     public String login() {
         return "/login";
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/login?logout";
     }
 }
