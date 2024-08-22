@@ -18,7 +18,7 @@
 <nav id="user-nav-bar" class="navbar navbar-dark bg-dark">
     <div class="container-fluid width: 100%">
         <div class="col-2"> <!-- отображение имени авторизованного пользователя и его роли-->
-            <div class="text-white container" th:text="'\'' + ${username} + '\'' +  ' with roles ' + ${roles}">
+            <div class="text-white container" th:text="'\'' + ${mainUser.getUsername()} + '\'' +  ' with roles ' + ${mainUser.getAuthorities()}">
                 Username
             </div>
         </div>
@@ -114,7 +114,7 @@
                                                                     data-toggle="modal"
                                                                     th:data-target="${'#editModal' + user.id}"
                                                                     th:id="${'editButton' + user.id}"
-                                                                    th:href="@{/edituserbyid?id={id}(id=${user.getId()})}">
+                                                                    th:href="@{/edit-user-by-id?id={id}(id=${user.getId()})}">
                                                                 Edit
                                                             </button>
 
@@ -124,7 +124,7 @@
                                                                  aria-labelledby="exampleModalLabel"
                                                                  aria-hidden="true"
                                                                  th:id="${'editModal' + user.id}"
-                                                                 th:href="@{/edituserbyid?id={id}(id=${user.getId()})}">
+                                                                 th:href="@{/edit-user-by-id?id={id}(id=${user.getId()})}">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
@@ -139,7 +139,7 @@
                                                                         </div>
                                                                         <form method="post"
                                                                               th:object="${user}"
-                                                                              th:action="@{/userupdate}"
+                                                                              th:action="@{/user-update}"
                                                                               class="col-form-label-sm">
                                                                             <div style="background-color: white">
                                                                                 <div class="row justify-content-md-center">
@@ -254,7 +254,7 @@
                                                                     data-toggle="modal"
                                                                     th:data-target="${'#deleteModal' + user.id}"
                                                                     th:id="${'deleteButton' + user.id}"
-                                                                    th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}">
+                                                                    th:href="@{/delete-user-by-id?id={id}(id=${user.getId()})}">
                                                                 Delete
                                                             </button>
 
@@ -264,7 +264,7 @@
                                                                  aria-labelledby="exampleModalLabel1"
                                                                  aria-hidden="true"
                                                                  th:id="${'deleteModal' + user.id}"
-                                                                 th:href="@{/edituserbyid?id={id}(id=${user.getId()})}">
+                                                                 th:href="@{/delete-user-by-id?id={id}(id=${user.getId()})}">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
@@ -279,7 +279,7 @@
                                                                         </div>
                                                                         <form method="get"
                                                                               th:object="${user}"
-                                                                              th:action="@{/deleteuserbyid}"
+                                                                              th:action="@{/delete-user-by-id}"
                                                                               class="col-form-label-sm">
                                                                             <div style="background-color: white">
                                                                                 <div class="row justify-content-md-center">
@@ -385,8 +385,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-<!--                                                            <a th:href="@{/deleteuserbyid?id={id}(id=${user.getId()})}"-->
-<!--                                                               class="btn btn-primary">Delete</a>-->
                                                         </td>
                                                         <td th:text="${user.getRoles()}">Roles</td>
                                                     </tr>

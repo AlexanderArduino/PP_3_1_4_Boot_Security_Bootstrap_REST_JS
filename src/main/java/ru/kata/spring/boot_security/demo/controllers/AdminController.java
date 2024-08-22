@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -36,16 +34,14 @@ public class AdminController {
     }
 
     @GetMapping("/admin/all-users")
-    public String allUsers(Model model,
-                           @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
+    public String getAllUsers(Model model,
+                              @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
+        //для отображения в навбаре зашедшего пользователя
         List<User> users = userService.findAllUsers();
-        String username = currentUser.getUsername();
-        User mainUser = userService.getByUsername(username);
-        Collection<GrantedAuthority> roles = currentUser.getAuthorities();
-        model.addAttribute("roles", roles);
-        model.addAttribute("username", username);
-        model.addAttribute("mainUser", mainUser);
         model.addAttribute("users", users);
+        User mainUser = userService.getByUsername(currentUser.getUsername());
+        model.addAttribute("mainUser", mainUser);
+        //для вкладки нового пользователя
         User newUser = new User();
         Set<Role> allRoles = roleService.findAllRoles();
         model.addAttribute("newUser", newUser);
@@ -54,7 +50,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/edituserbyid")
+    @GetMapping("/edit-user-by-id")
     public String editUserView(@RequestParam("id") Long id, Model model) {
         User editUser = userService.getById(id);
         Set<Role> allRoles = roleService.findAllRoles();
@@ -63,13 +59,13 @@ public class AdminController {
         return "admin/edit-user";
     }
 
-    @PostMapping("/userupdate")
+    @PostMapping("/user-update")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/admin/all-users";
     }
 
-    @GetMapping("/deleteuserbyid")
+    @GetMapping("/delete-user-by-id")
     public String deleteUserAccount(@RequestParam("id") Long id) {
         User user = userService.getById(id);
         user.setRoles(new HashSet<>());

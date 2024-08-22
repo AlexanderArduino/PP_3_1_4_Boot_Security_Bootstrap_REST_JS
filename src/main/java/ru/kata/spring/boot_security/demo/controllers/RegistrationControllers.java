@@ -34,14 +34,14 @@ public class RegistrationControllers {
         this.roleService = roleService;
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        User user = new User();
-        Set<Role> allRoles = roleService.findAllRoles();
-        model.addAttribute("user", user);
-        model.addAttribute("allRoles", allRoles);
-        return "admin/registration";
-    }
+//    @GetMapping("/registration")
+//    public String registration(Model model) {
+//        User user = new User();
+//        Set<Role> allRoles = roleService.findAllRoles();
+//        model.addAttribute("user", user);
+//        model.addAttribute("allRoles", allRoles);
+//        return "admin/registration";
+//    }
 
     @PostMapping("/registration")
     public String registrationUser(@ModelAttribute("user") User user,
