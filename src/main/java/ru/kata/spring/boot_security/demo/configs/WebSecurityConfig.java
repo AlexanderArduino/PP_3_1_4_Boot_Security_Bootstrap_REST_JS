@@ -5,12 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 
@@ -27,11 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
-    }
-
-//    @Autowired
-    public void setUserDetailsService(UserService userService) {
-        this.userService = userService;
     }
 
     @Override
