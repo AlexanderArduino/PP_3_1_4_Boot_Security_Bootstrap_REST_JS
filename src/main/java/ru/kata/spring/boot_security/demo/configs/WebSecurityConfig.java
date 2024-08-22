@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 
 @Configuration
@@ -18,15 +20,18 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private SuccessUserHandler successUserHandler;
-    private UserDetailsService userDetailsService;
+
+    @Lazy
+    @Autowired
+    private UserService userService;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
     }
 
-    @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+//    @Autowired
+    public void setUserDetailsService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -56,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setUserDetailsService(userService);
         return authenticationProvider;
     }
 }
