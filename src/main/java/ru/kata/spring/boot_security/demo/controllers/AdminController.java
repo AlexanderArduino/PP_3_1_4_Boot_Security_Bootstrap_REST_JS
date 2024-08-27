@@ -1,76 +1,54 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.kata.spring.boot_security.demo.models.Role;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-@Controller
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
 
-    private UserService userService;
-    private RoleService roleService;
+    private final UserService userService;
 
-    @Autowired
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/admin/all-users")
-    public String getAllUsers(Model model,
-                              @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
-        //для отображения в навбаре зашедшего пользователя
-        List<User> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        User mainUser = userService.getByUsername(currentUser.getUsername());
-        model.addAttribute("mainUser", mainUser);
-        //для вкладки нового пользователя
-        User newUser = new User();
-        Set<Role> allRoles = roleService.findAllRoles();
-        model.addAttribute("newUser", newUser);
-        model.addAttribute("allRoles", allRoles);
-        return "/admin/all-users";
+    @GetMapping("table")
+    public ResponseEntity<List<User>> viewUsers() {
+        return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
     }
 
-
-    @GetMapping("/edit-user-by-id")
-    public String editUserView(@RequestParam("id") Long id, Model model) {
-        User editUser = userService.getById(id);
-        Set<Role> allRoles = roleService.findAllRoles();
-        model.addAttribute("user", editUser);
-        model.addAttribute("allRoles", allRoles);
-        return "admin/edit-user";
-    }
-
-    @PostMapping("/user-update")
-    public String updateUser(@ModelAttribute("user") User user) {
+    @PatchMapping("/{id}/edit")
+    public ResponseEntity<HttpStatus> editUser(@RequestBody User user) {
         userService.update(user);
-        return "redirect:/admin/all-users";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/delete-user-by-id")
-    public String deleteUserAccount(@RequestParam("id") Long id) {
-        User user = userService.getById(id);
-        user.setRoles(new HashSet<>());
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {
         userService.delete(id);
-        return "redirect:/admin/all-users";
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
+        userService.create(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> showUser(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/auth")
+    public ResponseEntity<User> getApiAuthUser(@AuthenticationPrincipal User user) {
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

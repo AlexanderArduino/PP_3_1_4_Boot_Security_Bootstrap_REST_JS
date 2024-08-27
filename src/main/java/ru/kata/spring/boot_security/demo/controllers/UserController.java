@@ -1,29 +1,18 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.UserService;
 
-@Controller
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.models.User;
+
+@RestController
+@RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping("/user")
-    public String goToUserPage(Model model, @AuthenticationPrincipal org.springframework.security.core.userdetails.User currentUser) {
-        String username = currentUser.getUsername();
-        User user = userService.getByUsername(username);
-        model.addAttribute("user", user);
-        return "/user";
+    @GetMapping("/auth")
+    public ResponseEntity<User> getApiAuthUser(@AuthenticationPrincipal User user) {
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
-

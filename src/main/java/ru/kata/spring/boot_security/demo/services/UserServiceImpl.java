@@ -1,27 +1,19 @@
 package ru.kata.spring.boot_security.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import javax.persistence.EntityExistsException;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -29,22 +21,8 @@ public class UserServiceImpl implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), rolesToAuthorities(user.getAuthorities()));
-    }
-
-    private Collection<? extends GrantedAuthority> rolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
-
-    @Override
     @Transactional
+    @Override
     public void create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -53,15 +31,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(User user) {
-        User user1 = userRepository.getUserById(user.getId());
-        if (user1 != null) {
-            if (!user1.getPassword().equals(user.getPassword())) {
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            }
-            userRepository.save(user);
-        } else {
-            throw new EntityExistsException(String.format("User with id=%s not found", user.getId()));
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        if (!user.getPassword().equals(existingUser.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
+        userRepository.save(user);
     }
 
     @Override
@@ -72,25 +47,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getById(Long id) {
-        return userRepository.getById(id);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User getByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<User> findAllUsers() {
+    public List<User> listUsers() {
         return userRepository.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean isUserExist(User user) {
-        return userRepository.findByUsername(user.getUsername()) != null; //сли юзер есть - true
     }
 }
